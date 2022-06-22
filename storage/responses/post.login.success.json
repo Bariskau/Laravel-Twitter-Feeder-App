@@ -1,0 +1,5 @@
+{
+    "access_token": "{YOUR_TOKEN}",
+    "token_type": "bearer",
+    "expires_in": 3600
+}

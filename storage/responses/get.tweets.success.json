@@ -1,0 +1,69 @@
+{
+    "data": [
+        {
+            "id": "259ccd4e-6497-45c8-bebb-5655f7a428e8",
+            "tweet_date": "2020-12-27T11:43:27.000000Z",
+            "tweet_id": 1343160562595803136,
+            "tweet": "How Python works https://t.co/ZbM14f94jm",
+            "status": "active",
+            "user": {
+                "id": "fc89c340-5d75-4a8c-9fce-ea1a96bd4f6a",
+                "email": "john@doe.com",
+                "name": "John Doe"
+            },
+            "media": [
+                {
+                    "url": "http://localhost:8000/storage/1/FjCMNv6BPAV7HDpC.jpg",
+                    "name": "FjCMNv6BPAV7HDpC.jpg",
+                    "size": 69233,
+                    "type": "image/jpeg"
+                }
+            ]
+        },
+        {
+            "id": "d7c87ff6-56c3-49fe-8959-9a0fd3894d2b",
+            "tweet_date": "2020-11-30T20:01:20.000000Z",
+            "tweet_id": 1333501386147893248,
+            "tweet": "@ProfDemirtas Ekonomiye olduğu kadar türkçeye olan hakimiyetinizde göz kamaştırıyor",
+            "status": "active",
+            "user": {
+                "id": "fc89c340-5d75-4a8c-9fce-ea1a96bd4f6a",
+                "email": "john@doe.com",
+                "name": "John Doe"
+            },
+            "media": []
+        }
+    ],
+    "links": {
+        "first": "http://localhost:8000/api/v1/tweets?page=1",
+        "last": "http://localhost:8000/api/v1/tweets?page=1",
+        "prev": null,
+        "next": null
+    },
+    "meta": {
+        "current_page": 1,
+        "from": 1,
+        "last_page": 1,
+        "links": [
+            {
+                "url": null,
+                "label": "&laquo; Previous",
+                "active": false
+            },
+            {
+                "url": "http://localhost:8000/api/v1/tweets?page=1",
+                "label": "1",
+                "active": true
+            },
+            {
+                "url": null,
+                "label": "Next &raquo;",
+                "active": false
+            }
+        ],
+        "path": "http://localhost:8000/api/v1/tweets",
+        "per_page": 50,
+        "to": 1,
+        "total": 2
+    }
+}

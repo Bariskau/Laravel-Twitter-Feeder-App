@@ -1,0 +1,10 @@
+{
+    "data": {
+        "id": "fc89c340-5d75-4a8c-9fce-ea1a96bd4f6a",
+        "email": "john@doe.com",
+        "name": "John Doe",
+        "phone_number": 5000000000,
+        "email_verified_at": null,
+        "sms_verified_at": null
+    }
+}

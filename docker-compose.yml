@@ -1,0 +1,51 @@
+version: "3.3"
+services:
+    twitter:
+        build:
+            args:
+                user: twitterbackend
+                uid: 1000
+            context: ./
+            dockerfile: Dockerfile
+        image: twitterbackend
+        container_name: twitterbackend-app
+        restart: unless-stopped
+        working_dir: /var/www/
+        volumes:
+            - ./:/var/www
+        networks:
+            - twitterbackend
+    database:
+        image: postgres
+        container_name: twitterbackend-db
+        restart: unless-stopped
+        environment:
+            POSTGRES_PASSWORD: ${DB_PASSWORD}
+            POSTGRES_USER: ${DB_USERNAME}
+            POSTGRES_DB: ${DB_DATABASE}
+        ports:
+            - "0.0.0.0:54322:5432"
+        volumes:
+            - ./docker-compose/postgresql/01-init.sh:/docker-entrypoint-initdb.d/01-init.sh
+            - twitter-data:/var/lib/postgresql/data
+        networks:
+            - twitterbackend
+
+    nginx:
+        image: nginx:1.17-alpine
+        container_name: twitterbackend-nginx
+        restart: unless-stopped
+        ports:
+            - 8000:80
+        volumes:
+            - ./:/var/www
+            - ./docker-compose/nginx:/etc/nginx/conf.d
+        networks:
+            - twitterbackend
+
+volumes:
+    twitter-data:
+
+networks:
+    twitterbackend:
+        driver: bridge

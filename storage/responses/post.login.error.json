@@ -1,0 +1,5 @@
+{
+    "status": "error",
+    "code": 401,
+    "message": "Password or e-mail is incorrect"
+}

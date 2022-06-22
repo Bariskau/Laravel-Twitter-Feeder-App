@@ -1,0 +1,536 @@
+{
+    "variable": [
+        {
+            "id": "baseUrl",
+            "key": "baseUrl",
+            "type": "string",
+            "name": "string",
+            "value": "localhost"
+        }
+    ],
+    "info": {
+        "name": "TwitterFeederApplication",
+        "_postman_id": "e14e7961-7305-4525-8588-f70321873199",
+        "description": "Twitter Feeder Application API Docs",
+        "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
+    },
+    "item": [
+        {
+            "name": "Endpoints",
+            "description": "",
+            "item": [
+                {
+                    "name": "POST Login",
+                    "request": {
+                        "url": {
+                            "protocol": "http",
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/login",
+                            "query": [],
+                            "raw": "http:\/\/{{baseUrl}}\/api\/v1\/login"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"email\":\"bode.breanna@example.org\",\"password\":\"\"}"
+                        },
+                        "description": "This endpoint allows you to log in and receive a token.\n<aside class=\"notice\">By default ttl is set to 3600<\/aside>",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n    \"access_token\": \"{YOUR_TOKEN}\",\n    \"token_type\": \"bearer\",\n    \"expires_in\": 3600\n}\n",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n    \"status\": \"error\",\n    \"code\": 401,\n    \"message\": \"Password or e-mail is incorrect\"\n}\n",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "POST Register",
+                    "request": {
+                        "url": {
+                            "protocol": "http",
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/register",
+                            "query": [],
+                            "raw": "http:\/\/{{baseUrl}}\/api\/v1\/register"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"ekougtsnsambqzscncrscqpseurbioapwqujcqqftr\",\"email\":\"lon95@example.com\",\"password\":\"rgxcnsmubqlyldlyerjcjhimueokttmjadpelbmy\",\"phone_number\":\"5809080956\",\"twitter_address\":\"mollitia\"}"
+                        },
+                        "description": "This endpoint allows you to register.",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n    \"message\": \"Successfully registered\"\n}\n",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n    \"message\": \"The given data was invalid.\",\n    \"errors\": {\n        \"email\": [\n            \"The email must be a valid email address.\"\n        ],\n        \"password\": [\n            \"The password field is required.\"\n        ]\n    }\n}\n",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "GET Show User Tweets",
+                    "request": {
+                        "url": {
+                            "protocol": "http",
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/tweets\/user\/:userId",
+                            "query": [
+                                {
+                                    "key": "perPage",
+                                    "value": "3",
+                                    "description": "Number of items per page .",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "page",
+                                    "value": "4",
+                                    "description": "Current Page.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "http:\/\/{{baseUrl}}\/api\/v1\/tweets\/user\/:userId?perPage=3&page=4",
+                            "variable": [
+                                {
+                                    "id": "userId",
+                                    "key": "userId",
+                                    "value": "illo",
+                                    "description": "The ID of the user."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "List the tweets of the user whose id is given."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n    \"data\": [\n        {\n            \"id\": \"259ccd4e-6497-45c8-bebb-5655f7a428e8\",\n            \"tweet_date\": \"2020-12-27T11:43:27.000000Z\",\n            \"tweet_id\": 1343160562595803136,\n            \"tweet\": \"How Python works https:\/\/t.co\/ZbM14f94jm\",\n            \"status\": \"active\",\n            \"user\": {\n                \"id\": \"fc89c340-5d75-4a8c-9fce-ea1a96bd4f6a\",\n                \"email\": \"john@doe.com\",\n                \"name\": \"John Doe\"\n            },\n            \"media\": [\n                {\n                    \"url\": \"http:\/\/localhost:8000\/storage\/1\/FjCMNv6BPAV7HDpC.jpg\",\n                    \"name\": \"FjCMNv6BPAV7HDpC.jpg\",\n                    \"size\": 69233,\n                    \"type\": \"image\/jpeg\"\n                }\n            ]\n        },\n        {\n            \"id\": \"d7c87ff6-56c3-49fe-8959-9a0fd3894d2b\",\n            \"tweet_date\": \"2020-11-30T20:01:20.000000Z\",\n            \"tweet_id\": 1333501386147893248,\n            \"tweet\": \"@ProfDemirtas Ekonomiye oldu\u011fu kadar t\u00fcrk\u00e7eye olan hakimiyetinizde g\u00f6z kama\u015ft\u0131r\u0131yor\",\n            \"status\": \"active\",\n            \"user\": {\n                \"id\": \"fc89c340-5d75-4a8c-9fce-ea1a96bd4f6a\",\n                \"email\": \"john@doe.com\",\n                \"name\": \"John Doe\"\n            },\n            \"media\": []\n        }\n    ],\n    \"links\": {\n        \"first\": \"http:\/\/localhost:8000\/api\/v1\/tweets?page=1\",\n        \"last\": \"http:\/\/localhost:8000\/api\/v1\/tweets?page=1\",\n        \"prev\": null,\n        \"next\": null\n    },\n    \"meta\": {\n        \"current_page\": 1,\n        \"from\": 1,\n        \"last_page\": 1,\n        \"links\": [\n            {\n                \"url\": null,\n                \"label\": \"&laquo; Previous\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http:\/\/localhost:8000\/api\/v1\/tweets?page=1\",\n                \"label\": \"1\",\n                \"active\": true\n            },\n            {\n                \"url\": null,\n                \"label\": \"Next &raquo;\",\n                \"active\": false\n            }\n        ],\n        \"path\": \"http:\/\/localhost:8000\/api\/v1\/tweets\",\n        \"per_page\": 50,\n        \"to\": 1,\n        \"total\": 2\n    }\n}\n",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "GET Authenticated User Tweets",
+                    "request": {
+                        "url": {
+                            "protocol": "http",
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/tweets\/auth",
+                            "query": [
+                                {
+                                    "key": "perPage",
+                                    "value": "10",
+                                    "description": "Number of items per page .",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "page",
+                                    "value": "5",
+                                    "description": "Current Page.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "search",
+                                    "value": "officia",
+                                    "description": "Search keyword.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "type",
+                                    "value": "active",
+                                    "description": "active|passive",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "http:\/\/{{baseUrl}}\/api\/v1\/tweets\/auth?perPage=10&page=5&search=officia&type=active"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "List the tweets of the authenticated user."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n    \"data\": [\n        {\n            \"id\": \"259ccd4e-6497-45c8-bebb-5655f7a428e8\",\n            \"tweet_date\": \"2020-12-27T11:43:27.000000Z\",\n            \"tweet_id\": 1343160562595803136,\n            \"tweet\": \"How Python works https:\/\/t.co\/ZbM14f94jm\",\n            \"status\": \"active\",\n            \"user\": {\n                \"id\": \"fc89c340-5d75-4a8c-9fce-ea1a96bd4f6a\",\n                \"email\": \"john@doe.com\",\n                \"name\": \"John Doe\"\n            },\n            \"media\": [\n                {\n                    \"url\": \"http:\/\/localhost:8000\/storage\/1\/FjCMNv6BPAV7HDpC.jpg\",\n                    \"name\": \"FjCMNv6BPAV7HDpC.jpg\",\n                    \"size\": 69233,\n                    \"type\": \"image\/jpeg\"\n                }\n            ]\n        },\n        {\n            \"id\": \"d7c87ff6-56c3-49fe-8959-9a0fd3894d2b\",\n            \"tweet_date\": \"2020-11-30T20:01:20.000000Z\",\n            \"tweet_id\": 1333501386147893248,\n            \"tweet\": \"@ProfDemirtas Ekonomiye oldu\u011fu kadar t\u00fcrk\u00e7eye olan hakimiyetinizde g\u00f6z kama\u015ft\u0131r\u0131yor\",\n            \"status\": \"active\",\n            \"user\": {\n                \"id\": \"fc89c340-5d75-4a8c-9fce-ea1a96bd4f6a\",\n                \"email\": \"john@doe.com\",\n                \"name\": \"John Doe\"\n            },\n            \"media\": []\n        }\n    ],\n    \"links\": {\n        \"first\": \"http:\/\/localhost:8000\/api\/v1\/tweets?page=1\",\n        \"last\": \"http:\/\/localhost:8000\/api\/v1\/tweets?page=1\",\n        \"prev\": null,\n        \"next\": null\n    },\n    \"meta\": {\n        \"current_page\": 1,\n        \"from\": 1,\n        \"last_page\": 1,\n        \"links\": [\n            {\n                \"url\": null,\n                \"label\": \"&laquo; Previous\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http:\/\/localhost:8000\/api\/v1\/tweets?page=1\",\n                \"label\": \"1\",\n                \"active\": true\n            },\n            {\n                \"url\": null,\n                \"label\": \"Next &raquo;\",\n                \"active\": false\n            }\n        ],\n        \"path\": \"http:\/\/localhost:8000\/api\/v1\/tweets\",\n        \"per_page\": 50,\n        \"to\": 1,\n        \"total\": 2\n    }\n}\n",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "POST Get Last 20 Tweets",
+                    "request": {
+                        "url": {
+                            "protocol": "http",
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/tweets\/get-last-tweets",
+                            "query": [],
+                            "raw": "http:\/\/{{baseUrl}}\/api\/v1\/tweets\/get-last-tweets"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Get the last 20 tweets of the user from twitter"
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 204,
+                            "body": "{}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "GET All Tweets",
+                    "request": {
+                        "url": {
+                            "protocol": "http",
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/tweets",
+                            "query": [
+                                {
+                                    "key": "perPage",
+                                    "value": "19",
+                                    "description": "Number of items per page .",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "page",
+                                    "value": "17",
+                                    "description": "Current Page.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "http:\/\/{{baseUrl}}\/api\/v1\/tweets?perPage=19&page=17"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "List the tweets of the all user."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n    \"data\": [\n        {\n            \"id\": \"259ccd4e-6497-45c8-bebb-5655f7a428e8\",\n            \"tweet_date\": \"2020-12-27T11:43:27.000000Z\",\n            \"tweet_id\": 1343160562595803136,\n            \"tweet\": \"How Python works https:\/\/t.co\/ZbM14f94jm\",\n            \"status\": \"active\",\n            \"user\": {\n                \"id\": \"fc89c340-5d75-4a8c-9fce-ea1a96bd4f6a\",\n                \"email\": \"john@doe.com\",\n                \"name\": \"John Doe\"\n            },\n            \"media\": [\n                {\n                    \"url\": \"http:\/\/localhost:8000\/storage\/1\/FjCMNv6BPAV7HDpC.jpg\",\n                    \"name\": \"FjCMNv6BPAV7HDpC.jpg\",\n                    \"size\": 69233,\n                    \"type\": \"image\/jpeg\"\n                }\n            ]\n        },\n        {\n            \"id\": \"d7c87ff6-56c3-49fe-8959-9a0fd3894d2b\",\n            \"tweet_date\": \"2020-11-30T20:01:20.000000Z\",\n            \"tweet_id\": 1333501386147893248,\n            \"tweet\": \"@ProfDemirtas Ekonomiye oldu\u011fu kadar t\u00fcrk\u00e7eye olan hakimiyetinizde g\u00f6z kama\u015ft\u0131r\u0131yor\",\n            \"status\": \"active\",\n            \"user\": {\n                \"id\": \"fc89c340-5d75-4a8c-9fce-ea1a96bd4f6a\",\n                \"email\": \"john@doe.com\",\n                \"name\": \"John Doe\"\n            },\n            \"media\": []\n        }\n    ],\n    \"links\": {\n        \"first\": \"http:\/\/localhost:8000\/api\/v1\/tweets?page=1\",\n        \"last\": \"http:\/\/localhost:8000\/api\/v1\/tweets?page=1\",\n        \"prev\": null,\n        \"next\": null\n    },\n    \"meta\": {\n        \"current_page\": 1,\n        \"from\": 1,\n        \"last_page\": 1,\n        \"links\": [\n            {\n                \"url\": null,\n                \"label\": \"&laquo; Previous\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http:\/\/localhost:8000\/api\/v1\/tweets?page=1\",\n                \"label\": \"1\",\n                \"active\": true\n            },\n            {\n                \"url\": null,\n                \"label\": \"Next &raquo;\",\n                \"active\": false\n            }\n        ],\n        \"path\": \"http:\/\/localhost:8000\/api\/v1\/tweets\",\n        \"per_page\": 50,\n        \"to\": 1,\n        \"total\": 2\n    }\n}\n",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "GET Verification Codes",
+                    "request": {
+                        "url": {
+                            "protocol": "http",
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/verification-codes",
+                            "query": [],
+                            "raw": "http:\/\/{{baseUrl}}\/api\/v1\/verification-codes"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "For testing purposes only. Returns valid verification codes for the user's mail or phone numbers."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "[\n    {\n        \"id\": 1,\n        \"type\": \"sms\",\n        \"valid\": true,\n        \"validity\": \"5\",\n        \"token\": \"X5ilQT\",\n        \"user_id\": 1,\n        \"created_at\": \"2021-12-24T02:41:05.000000Z\",\n        \"updated_at\": \"2021-12-24T02:41:05.000000Z\"\n    },\n    {\n        \"id\": 2,\n        \"type\": \"email\",\n        \"valid\": true,\n        \"validity\": \"5\",\n        \"token\": \"V7Yb4g\",\n        \"user_id\": 1,\n        \"created_at\": \"2021-12-24T02:41:05.000000Z\",\n        \"updated_at\": \"2021-12-24T02:41:05.000000Z\"\n    }\n]\n",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "POST Regenerate Verification Token",
+                    "request": {
+                        "url": {
+                            "protocol": "http",
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/verification-generate",
+                            "query": [],
+                            "raw": "http:\/\/{{baseUrl}}\/api\/v1\/verification-generate"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"type\":\"ut\"}"
+                        },
+                        "description": "This endpoint provides the user regenerates validation codes of the specified type"
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n    \"token\": \"i2XlF3\",\n    \"type\": \"sms\"\n}\n",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 422,
+                            "body": "{\n    \"message\": \"The given data was invalid.\",\n    \"errors\": {\n        \"type\": [\n            \"The type field is required.\"\n        ]\n    }\n}\n",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "POST Logout",
+                    "request": {
+                        "url": {
+                            "protocol": "http",
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/logout",
+                            "query": [],
+                            "raw": "http:\/\/{{baseUrl}}\/api\/v1\/logout"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "This endpoint allows the authenticated user to log out."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 204,
+                            "body": "{}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "POST Refresh Token",
+                    "request": {
+                        "url": {
+                            "protocol": "http",
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/refresh",
+                            "query": [],
+                            "raw": "http:\/\/{{baseUrl}}\/api\/v1\/refresh"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Renews the token before the ttl expires"
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n    \"access_token\": \"{YOUR_TOKEN}\",\n    \"token_type\": \"bearer\",\n    \"expires_in\": 3600\n}\n",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "POST Verify User",
+                    "request": {
+                        "url": {
+                            "protocol": "http",
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/verification",
+                            "query": [],
+                            "raw": "http:\/\/{{baseUrl}}\/api\/v1\/verification"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"token\":\"a\",\"type\":\"nobis\"}"
+                        },
+                        "description": "This endpoint provides the users to verify their email or phone number"
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 204,
+                            "body": "{}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\n    \"status\": \"error\",\n    \"code\": 403,\n    \"message\": \"VerificationCodeWrong\"\n}\n",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "PUT Update And Publish Tweet",
+                    "request": {
+                        "url": {
+                            "protocol": "http",
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/tweets",
+                            "query": [],
+                            "raw": "http:\/\/{{baseUrl}}\/api\/v1\/tweets",
+                            "variable": [
+                                {
+                                    "id": "tweetId",
+                                    "key": "tweetId",
+                                    "value": "iure",
+                                    "description": "The ID of the tweet."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"tweet\":\"architecto\"}"
+                        },
+                        "description": "The tweet is updated and published."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 204,
+                            "body": "{}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "auth": {
+        "type": "bearer"
+    }
+}

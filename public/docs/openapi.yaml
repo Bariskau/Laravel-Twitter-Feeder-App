@@ -1,0 +1,1098 @@
+openapi: 3.0.3
+info:
+  title: TwitterFeederApplication
+  description: 'Twitter Feeder Application API Docs'
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost:8000'
+paths:
+  /api/v1/login:
+    post:
+      summary: 'POST Login'
+      description: "This endpoint allows you to log in and receive a token.\n<aside class=\"notice\">By default ttl is set to 3600</aside>"
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  access_token: '{YOUR_TOKEN}'
+                  token_type: bearer
+                  expires_in: 3600
+                properties:
+                  access_token:
+                    type: string
+                    example: '{YOUR_TOKEN}'
+                  token_type:
+                    type: string
+                    example: bearer
+                  expires_in:
+                    type: integer
+                    example: 3600
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  code: 401
+                  message: 'Password or e-mail is incorrect'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  code:
+                    type: integer
+                    example: 401
+                  message:
+                    type: string
+                    example: 'Password or e-mail is incorrect'
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 'Must be a valid email address.'
+                  example: bode.breanna@example.org
+                password:
+                  type: string
+                  description: 'Must be at least 6 characters.'
+                  example: ''
+              required:
+                - email
+                - password
+      security: []
+  /api/v1/register:
+    post:
+      summary: 'POST Register'
+      description: 'This endpoint allows you to register.'
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Successfully registered'
+                properties:
+                  message:
+                    type: string
+                    example: 'Successfully registered'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'The given data was invalid.'
+                  errors:
+                    email:
+                      - 'The email must be a valid email address.'
+                    password:
+                      - 'The password field is required.'
+                properties:
+                  message:
+                    type: string
+                    example: 'The given data was invalid.'
+                  errors:
+                    type: object
+                    example:
+                      email:
+                        - 'The email must be a valid email address.'
+                      password:
+                        - 'The password field is required.'
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Must not be greater than 100 characters.'
+                  example: ekougtsnsambqzscncrscqpseurbioapwqujcqqftr
+                email:
+                  type: string
+                  description: 'Must be a valid email address.'
+                  example: lon95@example.com
+                password:
+                  type: string
+                  description: 'Must be at least 6 characters. Must not be greater than 50 characters.'
+                  example: rgxcnsmubqlyldlyerjcjhimueokttmjadpelbmy
+                phone_number:
+                  type: string
+                  description: 'Must be 10 digits.'
+                  example: '5809080956'
+                twitter_address:
+                  type: string
+                  description: ''
+                  example: mollitia
+              required:
+                - name
+                - email
+                - password
+                - phone_number
+                - twitter_address
+      security: []
+  '/api/v1/tweets/user/{userId}':
+    get:
+      summary: 'GET Show User Tweets'
+      description: 'List the tweets of the user whose id is given.'
+      parameters:
+        -
+          in: query
+          name: perPage
+          description: 'Number of items per page .'
+          example: 3
+          required: false
+          schema:
+            type: integer
+            description: 'Number of items per page .'
+            example: 3
+        -
+          in: query
+          name: page
+          description: 'Current Page.'
+          example: 4
+          required: false
+          schema:
+            type: integer
+            description: 'Current Page.'
+            example: 4
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer {YOUR_AUTH_KEY}'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    -
+                      id: 259ccd4e-6497-45c8-bebb-5655f7a428e8
+                      tweet_date: '2020-12-27T11:43:27.000000Z'
+                      tweet_id: 1343160562595803136
+                      tweet: 'How Python works https://t.co/ZbM14f94jm'
+                      status: active
+                      user:
+                        id: fc89c340-5d75-4a8c-9fce-ea1a96bd4f6a
+                        email: john@doe.com
+                        name: 'John Doe'
+                      media:
+                        -
+                          url: 'http://localhost:8000/storage/1/FjCMNv6BPAV7HDpC.jpg'
+                          name: FjCMNv6BPAV7HDpC.jpg
+                          size: 69233
+                          type: image/jpeg
+                    -
+                      id: d7c87ff6-56c3-49fe-8959-9a0fd3894d2b
+                      tweet_date: '2020-11-30T20:01:20.000000Z'
+                      tweet_id: 1333501386147893248
+                      tweet: '@ProfDemirtas Ekonomiye olduğu kadar türkçeye olan hakimiyetinizde göz kamaştırıyor'
+                      status: active
+                      user:
+                        id: fc89c340-5d75-4a8c-9fce-ea1a96bd4f6a
+                        email: john@doe.com
+                        name: 'John Doe'
+                      media: []
+                  links:
+                    first: 'http://localhost:8000/api/v1/tweets?page=1'
+                    last: 'http://localhost:8000/api/v1/tweets?page=1'
+                    prev: null
+                    next: null
+                  meta:
+                    current_page: 1
+                    from: 1
+                    last_page: 1
+                    links:
+                      -
+                        url: null
+                        label: '&laquo; Previous'
+                        active: false
+                      -
+                        url: 'http://localhost:8000/api/v1/tweets?page=1'
+                        label: '1'
+                        active: true
+                      -
+                        url: null
+                        label: 'Next &raquo;'
+                        active: false
+                    path: 'http://localhost:8000/api/v1/tweets'
+                    per_page: 50
+                    to: 1
+                    total: 2
+                properties:
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 259ccd4e-6497-45c8-bebb-5655f7a428e8
+                        tweet_date: '2020-12-27T11:43:27.000000Z'
+                        tweet_id: 1343160562595803136
+                        tweet: 'How Python works https://t.co/ZbM14f94jm'
+                        status: active
+                        user:
+                          id: fc89c340-5d75-4a8c-9fce-ea1a96bd4f6a
+                          email: john@doe.com
+                          name: 'John Doe'
+                        media:
+                          -
+                            url: 'http://localhost:8000/storage/1/FjCMNv6BPAV7HDpC.jpg'
+                            name: FjCMNv6BPAV7HDpC.jpg
+                            size: 69233
+                            type: image/jpeg
+                      -
+                        id: d7c87ff6-56c3-49fe-8959-9a0fd3894d2b
+                        tweet_date: '2020-11-30T20:01:20.000000Z'
+                        tweet_id: 1333501386147893248
+                        tweet: '@ProfDemirtas Ekonomiye olduğu kadar türkçeye olan hakimiyetinizde göz kamaştırıyor'
+                        status: active
+                        user:
+                          id: fc89c340-5d75-4a8c-9fce-ea1a96bd4f6a
+                          email: john@doe.com
+                          name: 'John Doe'
+                        media: []
+                    items:
+                      type: object
+                  links:
+                    type: object
+                    example:
+                      first: 'http://localhost:8000/api/v1/tweets?page=1'
+                      last: 'http://localhost:8000/api/v1/tweets?page=1'
+                      prev: null
+                      next: null
+                  meta:
+                    type: object
+                    example:
+                      current_page: 1
+                      from: 1
+                      last_page: 1
+                      links:
+                        -
+                          url: null
+                          label: '&laquo; Previous'
+                          active: false
+                        -
+                          url: 'http://localhost:8000/api/v1/tweets?page=1'
+                          label: '1'
+                          active: true
+                        -
+                          url: null
+                          label: 'Next &raquo;'
+                          active: false
+                      path: 'http://localhost:8000/api/v1/tweets'
+                      per_page: 50
+                      to: 1
+                      total: 2
+      tags:
+        - Endpoints
+    parameters:
+      -
+        in: path
+        name: userId
+        description: 'The ID of the user.'
+        example: illo
+        required: true
+        schema:
+          type: string
+  /api/v1/tweets/auth:
+    get:
+      summary: 'GET Authenticated User Tweets'
+      description: 'List the tweets of the authenticated user.'
+      parameters:
+        -
+          in: query
+          name: perPage
+          description: 'Number of items per page .'
+          example: 10
+          required: false
+          schema:
+            type: integer
+            description: 'Number of items per page .'
+            example: 10
+        -
+          in: query
+          name: page
+          description: 'Current Page.'
+          example: 5
+          required: false
+          schema:
+            type: integer
+            description: 'Current Page.'
+            example: 5
+        -
+          in: query
+          name: search
+          description: 'Search keyword.'
+          example: officia
+          required: false
+          schema:
+            type: string
+            description: 'Search keyword.'
+            example: officia
+        -
+          in: query
+          name: type
+          description: active|passive
+          example: active
+          required: false
+          schema:
+            type: string
+            description: active|passive
+            example: active
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer {YOUR_AUTH_KEY}'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    -
+                      id: 259ccd4e-6497-45c8-bebb-5655f7a428e8
+                      tweet_date: '2020-12-27T11:43:27.000000Z'
+                      tweet_id: 1343160562595803136
+                      tweet: 'How Python works https://t.co/ZbM14f94jm'
+                      status: active
+                      user:
+                        id: fc89c340-5d75-4a8c-9fce-ea1a96bd4f6a
+                        email: john@doe.com
+                        name: 'John Doe'
+                      media:
+                        -
+                          url: 'http://localhost:8000/storage/1/FjCMNv6BPAV7HDpC.jpg'
+                          name: FjCMNv6BPAV7HDpC.jpg
+                          size: 69233
+                          type: image/jpeg
+                    -
+                      id: d7c87ff6-56c3-49fe-8959-9a0fd3894d2b
+                      tweet_date: '2020-11-30T20:01:20.000000Z'
+                      tweet_id: 1333501386147893248
+                      tweet: '@ProfDemirtas Ekonomiye olduğu kadar türkçeye olan hakimiyetinizde göz kamaştırıyor'
+                      status: active
+                      user:
+                        id: fc89c340-5d75-4a8c-9fce-ea1a96bd4f6a
+                        email: john@doe.com
+                        name: 'John Doe'
+                      media: []
+                  links:
+                    first: 'http://localhost:8000/api/v1/tweets?page=1'
+                    last: 'http://localhost:8000/api/v1/tweets?page=1'
+                    prev: null
+                    next: null
+                  meta:
+                    current_page: 1
+                    from: 1
+                    last_page: 1
+                    links:
+                      -
+                        url: null
+                        label: '&laquo; Previous'
+                        active: false
+                      -
+                        url: 'http://localhost:8000/api/v1/tweets?page=1'
+                        label: '1'
+                        active: true
+                      -
+                        url: null
+                        label: 'Next &raquo;'
+                        active: false
+                    path: 'http://localhost:8000/api/v1/tweets'
+                    per_page: 50
+                    to: 1
+                    total: 2
+                properties:
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 259ccd4e-6497-45c8-bebb-5655f7a428e8
+                        tweet_date: '2020-12-27T11:43:27.000000Z'
+                        tweet_id: 1343160562595803136
+                        tweet: 'How Python works https://t.co/ZbM14f94jm'
+                        status: active
+                        user:
+                          id: fc89c340-5d75-4a8c-9fce-ea1a96bd4f6a
+                          email: john@doe.com
+                          name: 'John Doe'
+                        media:
+                          -
+                            url: 'http://localhost:8000/storage/1/FjCMNv6BPAV7HDpC.jpg'
+                            name: FjCMNv6BPAV7HDpC.jpg
+                            size: 69233
+                            type: image/jpeg
+                      -
+                        id: d7c87ff6-56c3-49fe-8959-9a0fd3894d2b
+                        tweet_date: '2020-11-30T20:01:20.000000Z'
+                        tweet_id: 1333501386147893248
+                        tweet: '@ProfDemirtas Ekonomiye olduğu kadar türkçeye olan hakimiyetinizde göz kamaştırıyor'
+                        status: active
+                        user:
+                          id: fc89c340-5d75-4a8c-9fce-ea1a96bd4f6a
+                          email: john@doe.com
+                          name: 'John Doe'
+                        media: []
+                    items:
+                      type: object
+                  links:
+                    type: object
+                    example:
+                      first: 'http://localhost:8000/api/v1/tweets?page=1'
+                      last: 'http://localhost:8000/api/v1/tweets?page=1'
+                      prev: null
+                      next: null
+                  meta:
+                    type: object
+                    example:
+                      current_page: 1
+                      from: 1
+                      last_page: 1
+                      links:
+                        -
+                          url: null
+                          label: '&laquo; Previous'
+                          active: false
+                        -
+                          url: 'http://localhost:8000/api/v1/tweets?page=1'
+                          label: '1'
+                          active: true
+                        -
+                          url: null
+                          label: 'Next &raquo;'
+                          active: false
+                      path: 'http://localhost:8000/api/v1/tweets'
+                      per_page: 50
+                      to: 1
+                      total: 2
+      tags:
+        - Endpoints
+  /api/v1/tweets/get-last-tweets:
+    post:
+      summary: 'POST Get Last 20 Tweets'
+      description: 'Get the last 20 tweets of the user from twitter'
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer {YOUR_AUTH_KEY}'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        204:
+          description: ''
+      tags:
+        - Endpoints
+  /api/v1/tweets:
+    get:
+      summary: 'GET All Tweets'
+      description: 'List the tweets of the all user.'
+      parameters:
+        -
+          in: query
+          name: perPage
+          description: 'Number of items per page .'
+          example: 19
+          required: false
+          schema:
+            type: integer
+            description: 'Number of items per page .'
+            example: 19
+        -
+          in: query
+          name: page
+          description: 'Current Page.'
+          example: 17
+          required: false
+          schema:
+            type: integer
+            description: 'Current Page.'
+            example: 17
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer {YOUR_AUTH_KEY}'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    -
+                      id: 259ccd4e-6497-45c8-bebb-5655f7a428e8
+                      tweet_date: '2020-12-27T11:43:27.000000Z'
+                      tweet_id: 1343160562595803136
+                      tweet: 'How Python works https://t.co/ZbM14f94jm'
+                      status: active
+                      user:
+                        id: fc89c340-5d75-4a8c-9fce-ea1a96bd4f6a
+                        email: john@doe.com
+                        name: 'John Doe'
+                      media:
+                        -
+                          url: 'http://localhost:8000/storage/1/FjCMNv6BPAV7HDpC.jpg'
+                          name: FjCMNv6BPAV7HDpC.jpg
+                          size: 69233
+                          type: image/jpeg
+                    -
+                      id: d7c87ff6-56c3-49fe-8959-9a0fd3894d2b
+                      tweet_date: '2020-11-30T20:01:20.000000Z'
+                      tweet_id: 1333501386147893248
+                      tweet: '@ProfDemirtas Ekonomiye olduğu kadar türkçeye olan hakimiyetinizde göz kamaştırıyor'
+                      status: active
+                      user:
+                        id: fc89c340-5d75-4a8c-9fce-ea1a96bd4f6a
+                        email: john@doe.com
+                        name: 'John Doe'
+                      media: []
+                  links:
+                    first: 'http://localhost:8000/api/v1/tweets?page=1'
+                    last: 'http://localhost:8000/api/v1/tweets?page=1'
+                    prev: null
+                    next: null
+                  meta:
+                    current_page: 1
+                    from: 1
+                    last_page: 1
+                    links:
+                      -
+                        url: null
+                        label: '&laquo; Previous'
+                        active: false
+                      -
+                        url: 'http://localhost:8000/api/v1/tweets?page=1'
+                        label: '1'
+                        active: true
+                      -
+                        url: null
+                        label: 'Next &raquo;'
+                        active: false
+                    path: 'http://localhost:8000/api/v1/tweets'
+                    per_page: 50
+                    to: 1
+                    total: 2
+                properties:
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 259ccd4e-6497-45c8-bebb-5655f7a428e8
+                        tweet_date: '2020-12-27T11:43:27.000000Z'
+                        tweet_id: 1343160562595803136
+                        tweet: 'How Python works https://t.co/ZbM14f94jm'
+                        status: active
+                        user:
+                          id: fc89c340-5d75-4a8c-9fce-ea1a96bd4f6a
+                          email: john@doe.com
+                          name: 'John Doe'
+                        media:
+                          -
+                            url: 'http://localhost:8000/storage/1/FjCMNv6BPAV7HDpC.jpg'
+                            name: FjCMNv6BPAV7HDpC.jpg
+                            size: 69233
+                            type: image/jpeg
+                      -
+                        id: d7c87ff6-56c3-49fe-8959-9a0fd3894d2b
+                        tweet_date: '2020-11-30T20:01:20.000000Z'
+                        tweet_id: 1333501386147893248
+                        tweet: '@ProfDemirtas Ekonomiye olduğu kadar türkçeye olan hakimiyetinizde göz kamaştırıyor'
+                        status: active
+                        user:
+                          id: fc89c340-5d75-4a8c-9fce-ea1a96bd4f6a
+                          email: john@doe.com
+                          name: 'John Doe'
+                        media: []
+                    items:
+                      type: object
+                  links:
+                    type: object
+                    example:
+                      first: 'http://localhost:8000/api/v1/tweets?page=1'
+                      last: 'http://localhost:8000/api/v1/tweets?page=1'
+                      prev: null
+                      next: null
+                  meta:
+                    type: object
+                    example:
+                      current_page: 1
+                      from: 1
+                      last_page: 1
+                      links:
+                        -
+                          url: null
+                          label: '&laquo; Previous'
+                          active: false
+                        -
+                          url: 'http://localhost:8000/api/v1/tweets?page=1'
+                          label: '1'
+                          active: true
+                        -
+                          url: null
+                          label: 'Next &raquo;'
+                          active: false
+                      path: 'http://localhost:8000/api/v1/tweets'
+                      per_page: 50
+                      to: 1
+                      total: 2
+      tags:
+        - Endpoints
+    put:
+      summary: 'PUT Update And Publish Tweet'
+      description: 'The tweet is updated and published.'
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer {YOUR_AUTH_KEY}'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        204:
+          description: ''
+      tags:
+        - Endpoints
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tweet:
+                  type: string
+                  description: 'max:280'
+                  example: architecto
+  /api/v1/verification-codes:
+    get:
+      summary: 'GET Verification Codes'
+      description: 'For testing purposes only. Returns valid verification codes for the user''s mail or phone numbers.'
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer {YOUR_AUTH_KEY}'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                example:
+                  -
+                    id: 1
+                    type: sms
+                    valid: true
+                    validity: '5'
+                    token: X5ilQT
+                    user_id: 1
+                    created_at: '2021-12-24T02:41:05.000000Z'
+                    updated_at: '2021-12-24T02:41:05.000000Z'
+                  -
+                    id: 2
+                    type: email
+                    valid: true
+                    validity: '5'
+                    token: V7Yb4g
+                    user_id: 1
+                    created_at: '2021-12-24T02:41:05.000000Z'
+                    updated_at: '2021-12-24T02:41:05.000000Z'
+      tags:
+        - Endpoints
+  /api/v1/verification-generate:
+    post:
+      summary: 'POST Regenerate Verification Token'
+      description: 'This endpoint provides the user regenerates validation codes of the specified type'
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer {YOUR_AUTH_KEY}'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  token: i2XlF3
+                  type: sms
+                properties:
+                  token:
+                    type: string
+                    example: i2XlF3
+                  type:
+                    type: string
+                    example: sms
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'The given data was invalid.'
+                  errors:
+                    type:
+                      - 'The type field is required.'
+                properties:
+                  message:
+                    type: string
+                    example: 'The given data was invalid.'
+                  errors:
+                    type: object
+                    example:
+                      type:
+                        - 'The type field is required.'
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  description: email|sms
+                  example: ut
+              required:
+                - type
+  /api/v1/logout:
+    post:
+      summary: 'POST Logout'
+      description: 'This endpoint allows the authenticated user to log out.'
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer {YOUR_AUTH_KEY}'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        204:
+          description: ''
+      tags:
+        - Endpoints
+  /api/v1/refresh:
+    post:
+      summary: 'POST Refresh Token'
+      description: 'Renews the token before the ttl expires'
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer {YOUR_AUTH_KEY}'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  access_token: '{YOUR_TOKEN}'
+                  token_type: bearer
+                  expires_in: 3600
+                properties:
+                  access_token:
+                    type: string
+                    example: '{YOUR_TOKEN}'
+                  token_type:
+                    type: string
+                    example: bearer
+                  expires_in:
+                    type: integer
+                    example: 3600
+      tags:
+        - Endpoints
+  /api/v1/verification:
+    post:
+      summary: 'POST Verify User'
+      description: 'This endpoint provides the users to verify their email or phone number'
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer {YOUR_AUTH_KEY}'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        204:
+          description: ''
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  code: 403
+                  message: VerificationCodeWrong
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  code:
+                    type: integer
+                    example: 403
+                  message:
+                    type: string
+                    example: VerificationCodeWrong
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+                  description: ''
+                  example: a
+                type:
+                  type: string
+                  description: email|sms
+                  example: nobis
+              required:
+                - token
+                - type
+tags:
+  -
+    name: Endpoints
+    description: ''
+components:
+  securitySchemes:
+    default:
+      type: http
+      scheme: bearer
+      description: ''
+security:
+  -
+    default: []

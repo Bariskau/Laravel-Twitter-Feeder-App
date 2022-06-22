@@ -1,0 +1,1881 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>TwitterFeederApplication Documentation</title>
+
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../docs/css/theme-default.style.css" media="screen">
+    <link rel="stylesheet" href="../docs/css/theme-default.print.css" media="print">
+
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
+
+    <link rel="stylesheet"
+          href="https://unpkg.com/@highlightjs/cdn-assets@10.7.2/styles/obsidian.min.css">
+    <script src="https://unpkg.com/@highlightjs/cdn-assets@10.7.2/highlight.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jets/0.14.1/jets.min.js"></script>
+
+    <style id="language-style">
+        /* starts out as display none and is replaced with js later  */
+                    body .content .bash-example code { display: none; }
+                    body .content .javascript-example code { display: none; }
+            </style>
+
+    <script>
+        var baseUrl = "http://localhost:8000";
+        var useCsrf = Boolean();
+        var csrfUrl = "/sanctum/csrf-cookie";
+    </script>
+    <script src="../docs/js/tryitout-3.20.0.js"></script>
+
+    <script src="../docs/js/theme-default-3.20.0.js"></script>
+
+</head>
+
+<body data-languages="[&quot;bash&quot;,&quot;javascript&quot;]">
+
+<a href="#" id="nav-button">
+    <span>
+        MENU
+        <img src="../docs/images/navbar.png" alt="navbar-image" />
+    </span>
+</a>
+<div class="tocify-wrapper">
+    
+            <div class="lang-selector">
+                                            <button type="button" class="lang-button" data-language-name="bash">bash</button>
+                                            <button type="button" class="lang-button" data-language-name="javascript">javascript</button>
+                    </div>
+    
+    <div class="search">
+        <input type="text" class="search" id="input-search" placeholder="Search">
+    </div>
+
+    <div id="toc">
+                                                                            <ul id="tocify-header-0" class="tocify-header">
+                    <li class="tocify-item level-1" data-unique="introduction">
+                        <a href="#introduction">Introduction</a>
+                    </li>
+                                            
+                                                                    </ul>
+                                                <ul id="tocify-header-1" class="tocify-header">
+                    <li class="tocify-item level-1" data-unique="authenticating-requests">
+                        <a href="#authenticating-requests">Authenticating requests</a>
+                    </li>
+                                            
+                                                </ul>
+                    
+                    <ul id="tocify-header-2" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="endpoints">
+                    <a href="#endpoints">Endpoints</a>
+                </li>
+                                    <ul id="tocify-subheader-endpoints" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="endpoints-POSTapi-v1-login">
+                        <a href="#endpoints-POSTapi-v1-login">POST Login</a>
+                    </li>
+                                    <li class="tocify-item level-2" data-unique="endpoints-POSTapi-v1-register">
+                        <a href="#endpoints-POSTapi-v1-register">POST Register</a>
+                    </li>
+                                    <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-tweets-user--userId-">
+                        <a href="#endpoints-GETapi-v1-tweets-user--userId-">GET Show User Tweets</a>
+                    </li>
+                                    <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-tweets-auth">
+                        <a href="#endpoints-GETapi-v1-tweets-auth">GET Authenticated User Tweets</a>
+                    </li>
+                                    <li class="tocify-item level-2" data-unique="endpoints-POSTapi-v1-tweets-get-last-tweets">
+                        <a href="#endpoints-POSTapi-v1-tweets-get-last-tweets">POST Get Last 20 Tweets</a>
+                    </li>
+                                    <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-tweets">
+                        <a href="#endpoints-GETapi-v1-tweets">GET All Tweets</a>
+                    </li>
+                                    <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-verification-codes">
+                        <a href="#endpoints-GETapi-v1-verification-codes">GET Verification Codes</a>
+                    </li>
+                                    <li class="tocify-item level-2" data-unique="endpoints-POSTapi-v1-verification-generate">
+                        <a href="#endpoints-POSTapi-v1-verification-generate">POST Regenerate Verification Token</a>
+                    </li>
+                                    <li class="tocify-item level-2" data-unique="endpoints-POSTapi-v1-logout">
+                        <a href="#endpoints-POSTapi-v1-logout">POST Logout</a>
+                    </li>
+                                    <li class="tocify-item level-2" data-unique="endpoints-POSTapi-v1-refresh">
+                        <a href="#endpoints-POSTapi-v1-refresh">POST Refresh Token</a>
+                    </li>
+                                    <li class="tocify-item level-2" data-unique="endpoints-POSTapi-v1-verification">
+                        <a href="#endpoints-POSTapi-v1-verification">POST Verify User</a>
+                    </li>
+                                    <li class="tocify-item level-2" data-unique="endpoints-PUTapi-v1-tweets">
+                        <a href="#endpoints-PUTapi-v1-tweets">PUT Update And Publish Tweet</a>
+                    </li>
+                                                    </ul>
+                            </ul>
+        
+                        
+            </div>
+
+            <ul class="toc-footer" id="toc-footer">
+                            <li><a href="../docs/collection.json">View Postman collection</a></li>
+                            <li><a href="../docs/openapi.yaml">View OpenAPI spec</a></li>
+                            <li><a href="http://github.com/knuckleswtf/scribe">Documentation powered by Scribe ✍</a></li>
+                    </ul>
+        <ul class="toc-footer" id="last-updated">
+        <li>Last updated: December 24 2021</li>
+    </ul>
+</div>
+
+<div class="page-wrapper">
+    <div class="dark-box"></div>
+    <div class="content">
+        <h1 id="introduction">Introduction</h1>
+<p>Twitter Feeder Application API Docs</p>
+<p>This documentation aims to provide all the information you need to work with our API.</p>
+<aside>As you scroll, you'll see code examples for working with the API in different programming languages in the dark area to the right (or as part of the content on mobile).
+You can switch the language used with the tabs at the top right (or from the nav menu at the top left on mobile).</aside>
+<blockquote>
+<p>Base URL</p>
+</blockquote>
+<pre><code class="language-yaml">http://localhost:8000</code></pre>
+
+        <h1 id="authenticating-requests">Authenticating requests</h1>
+<p>To authenticate requests, include an <strong><code>Authorization</code></strong> header with the value <strong><code>"Bearer {YOUR_AUTH_KEY}"</code></strong>.</p>
+<p>All authenticated endpoints are marked with a <code>requires authentication</code> badge in the documentation below.</p>
+<p>You can retrieve your token by visiting your dashboard and clicking <b>Generate API token</b>.</p>
+
+        <h1 id="endpoints">Endpoints</h1>
+
+    
+
+            <h2 id="endpoints-POSTapi-v1-login">POST Login</h2>
+
+<p>
+</p>
+
+<p>This endpoint allows you to log in and receive a token.</p>
+<aside class="notice">By default ttl is set to 3600</aside>
+
+<span id="example-requests-POSTapi-v1-login">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8000/api/v1/login" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"email\": \"bode.breanna@example.org\",
+    \"password\": \"\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/v1/login"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "email": "bode.breanna@example.org",
+    "password": ""
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-v1-login">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;access_token&quot;: &quot;{YOUR_TOKEN}&quot;,
+    &quot;token_type&quot;: &quot;bearer&quot;,
+    &quot;expires_in&quot;: 3600
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;status&quot;: &quot;error&quot;,
+    &quot;code&quot;: 401,
+    &quot;message&quot;: &quot;Password or e-mail is incorrect&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-v1-login" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-v1-login"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-login"></code></pre>
+</span>
+<span id="execution-error-POSTapi-v1-login" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-v1-login"></code></pre>
+</span>
+<form id="form-POSTapi-v1-login" data-method="POST"
+      data-path="api/v1/login"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-login', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-v1-login"
+                    onclick="tryItOut('POSTapi-v1-login');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-v1-login"
+                    onclick="cancelTryOut('POSTapi-v1-login');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-v1-login" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/login</code></b>
+        </p>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <p>
+            <b><code>email</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+                <input type="text"
+               name="email"
+               data-endpoint="POSTapi-v1-login"
+               value="bode.breanna@example.org"
+               data-component="body" hidden>
+    <br>
+<p>Must be a valid email address.</p>
+        </p>
+                <p>
+            <b><code>password</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+                <input type="text"
+               name="password"
+               data-endpoint="POSTapi-v1-login"
+               value=""
+               data-component="body" hidden>
+    <br>
+<p>Must be at least 6 characters.</p>
+        </p>
+        </form>
+
+            <h2 id="endpoints-POSTapi-v1-register">POST Register</h2>
+
+<p>
+</p>
+
+<p>This endpoint allows you to register.</p>
+
+<span id="example-requests-POSTapi-v1-register">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8000/api/v1/register" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"name\": \"ekougtsnsambqzscncrscqpseurbioapwqujcqqftr\",
+    \"email\": \"lon95@example.com\",
+    \"password\": \"rgxcnsmubqlyldlyerjcjhimueokttmjadpelbmy\",
+    \"phone_number\": \"5809080956\",
+    \"twitter_address\": \"mollitia\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/v1/register"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "name": "ekougtsnsambqzscncrscqpseurbioapwqujcqqftr",
+    "email": "lon95@example.com",
+    "password": "rgxcnsmubqlyldlyerjcjhimueokttmjadpelbmy",
+    "phone_number": "5809080956",
+    "twitter_address": "mollitia"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-v1-register">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;message&quot;: &quot;Successfully registered&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;message&quot;: &quot;The given data was invalid.&quot;,
+    &quot;errors&quot;: {
+        &quot;email&quot;: [
+            &quot;The email must be a valid email address.&quot;
+        ],
+        &quot;password&quot;: [
+            &quot;The password field is required.&quot;
+        ]
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-v1-register" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-v1-register"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-register"></code></pre>
+</span>
+<span id="execution-error-POSTapi-v1-register" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-v1-register"></code></pre>
+</span>
+<form id="form-POSTapi-v1-register" data-method="POST"
+      data-path="api/v1/register"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-register', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-v1-register"
+                    onclick="tryItOut('POSTapi-v1-register');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-v1-register"
+                    onclick="cancelTryOut('POSTapi-v1-register');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-v1-register" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/register</code></b>
+        </p>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <p>
+            <b><code>name</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+                <input type="text"
+               name="name"
+               data-endpoint="POSTapi-v1-register"
+               value="ekougtsnsambqzscncrscqpseurbioapwqujcqqftr"
+               data-component="body" hidden>
+    <br>
+<p>Must not be greater than 100 characters.</p>
+        </p>
+                <p>
+            <b><code>email</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+                <input type="text"
+               name="email"
+               data-endpoint="POSTapi-v1-register"
+               value="lon95@example.com"
+               data-component="body" hidden>
+    <br>
+<p>Must be a valid email address.</p>
+        </p>
+                <p>
+            <b><code>password</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+                <input type="text"
+               name="password"
+               data-endpoint="POSTapi-v1-register"
+               value="rgxcnsmubqlyldlyerjcjhimueokttmjadpelbmy"
+               data-component="body" hidden>
+    <br>
+<p>Must be at least 6 characters. Must not be greater than 50 characters.</p>
+        </p>
+                <p>
+            <b><code>phone_number</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+                <input type="text"
+               name="phone_number"
+               data-endpoint="POSTapi-v1-register"
+               value="5809080956"
+               data-component="body" hidden>
+    <br>
+<p>Must be 10 digits.</p>
+        </p>
+                <p>
+            <b><code>twitter_address</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+                <input type="text"
+               name="twitter_address"
+               data-endpoint="POSTapi-v1-register"
+               value="mollitia"
+               data-component="body" hidden>
+    <br>
+
+        </p>
+        </form>
+
+            <h2 id="endpoints-GETapi-v1-tweets-user--userId-">GET Show User Tweets</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>List the tweets of the user whose id is given.</p>
+
+<span id="example-requests-GETapi-v1-tweets-user--userId-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/v1/tweets/user/illo?perPage=3&amp;page=4" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/v1/tweets/user/illo"
+);
+
+const params = {
+    "perPage": "3",
+    "page": "4",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-tweets-user--userId-">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: &quot;259ccd4e-6497-45c8-bebb-5655f7a428e8&quot;,
+            &quot;tweet_date&quot;: &quot;2020-12-27T11:43:27.000000Z&quot;,
+            &quot;tweet_id&quot;: 1343160562595803136,
+            &quot;tweet&quot;: &quot;How Python works https://t.co/ZbM14f94jm&quot;,
+            &quot;status&quot;: &quot;active&quot;,
+            &quot;user&quot;: {
+                &quot;id&quot;: &quot;fc89c340-5d75-4a8c-9fce-ea1a96bd4f6a&quot;,
+                &quot;email&quot;: &quot;john@doe.com&quot;,
+                &quot;name&quot;: &quot;John Doe&quot;
+            },
+            &quot;media&quot;: [
+                {
+                    &quot;url&quot;: &quot;http://localhost:8000/storage/1/FjCMNv6BPAV7HDpC.jpg&quot;,
+                    &quot;name&quot;: &quot;FjCMNv6BPAV7HDpC.jpg&quot;,
+                    &quot;size&quot;: 69233,
+                    &quot;type&quot;: &quot;image/jpeg&quot;
+                }
+            ]
+        },
+        {
+            &quot;id&quot;: &quot;d7c87ff6-56c3-49fe-8959-9a0fd3894d2b&quot;,
+            &quot;tweet_date&quot;: &quot;2020-11-30T20:01:20.000000Z&quot;,
+            &quot;tweet_id&quot;: 1333501386147893248,
+            &quot;tweet&quot;: &quot;@ProfDemirtas Ekonomiye olduğu kadar t&uuml;rk&ccedil;eye olan hakimiyetinizde g&ouml;z kamaştırıyor&quot;,
+            &quot;status&quot;: &quot;active&quot;,
+            &quot;user&quot;: {
+                &quot;id&quot;: &quot;fc89c340-5d75-4a8c-9fce-ea1a96bd4f6a&quot;,
+                &quot;email&quot;: &quot;john@doe.com&quot;,
+                &quot;name&quot;: &quot;John Doe&quot;
+            },
+            &quot;media&quot;: []
+        }
+    ],
+    &quot;links&quot;: {
+        &quot;first&quot;: &quot;http://localhost:8000/api/v1/tweets?page=1&quot;,
+        &quot;last&quot;: &quot;http://localhost:8000/api/v1/tweets?page=1&quot;,
+        &quot;prev&quot;: null,
+        &quot;next&quot;: null
+    },
+    &quot;meta&quot;: {
+        &quot;current_page&quot;: 1,
+        &quot;from&quot;: 1,
+        &quot;last_page&quot;: 1,
+        &quot;links&quot;: [
+            {
+                &quot;url&quot;: null,
+                &quot;label&quot;: &quot;&amp;laquo; Previous&quot;,
+                &quot;active&quot;: false
+            },
+            {
+                &quot;url&quot;: &quot;http://localhost:8000/api/v1/tweets?page=1&quot;,
+                &quot;label&quot;: &quot;1&quot;,
+                &quot;active&quot;: true
+            },
+            {
+                &quot;url&quot;: null,
+                &quot;label&quot;: &quot;Next &amp;raquo;&quot;,
+                &quot;active&quot;: false
+            }
+        ],
+        &quot;path&quot;: &quot;http://localhost:8000/api/v1/tweets&quot;,
+        &quot;per_page&quot;: 50,
+        &quot;to&quot;: 1,
+        &quot;total&quot;: 2
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-tweets-user--userId-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-tweets-user--userId-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-tweets-user--userId-"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-tweets-user--userId-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-tweets-user--userId-"></code></pre>
+</span>
+<form id="form-GETapi-v1-tweets-user--userId-" data-method="GET"
+      data-path="api/v1/tweets/user/{userId}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Authorization":"Bearer {YOUR_AUTH_KEY}","Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-tweets-user--userId-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-tweets-user--userId-"
+                    onclick="tryItOut('GETapi-v1-tweets-user--userId-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-tweets-user--userId-"
+                    onclick="cancelTryOut('GETapi-v1-tweets-user--userId-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-tweets-user--userId-" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/tweets/user/{userId}</code></b>
+        </p>
+                <p>
+            <label id="auth-GETapi-v1-tweets-user--userId-" hidden>Authorization header:
+                <b><code>Bearer </code></b><input type="text"
+                                                                name="Authorization"
+                                                                data-prefix="Bearer "
+                                                                data-endpoint="GETapi-v1-tweets-user--userId-"
+                                                                data-component="header"></label>
+        </p>
+                <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <p>
+                <b><code>userId</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+                <input type="text"
+               name="userId"
+               data-endpoint="GETapi-v1-tweets-user--userId-"
+               value="illo"
+               data-component="url" hidden>
+    <br>
+<p>The ID of the user.</p>
+            </p>
+                        <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                    <p>
+                <b><code>perPage</code></b>&nbsp;&nbsp;<small>integer</small>     <i>optional</i> &nbsp;
+                <input type="number"
+               name="perPage"
+               data-endpoint="GETapi-v1-tweets-user--userId-"
+               value="3"
+               data-component="query" hidden>
+    <br>
+<p>Number of items per page .</p>
+            </p>
+                    <p>
+                <b><code>page</code></b>&nbsp;&nbsp;<small>integer</small>     <i>optional</i> &nbsp;
+                <input type="number"
+               name="page"
+               data-endpoint="GETapi-v1-tweets-user--userId-"
+               value="4"
+               data-component="query" hidden>
+    <br>
+<p>Current Page.</p>
+            </p>
+                </form>
+
+            <h2 id="endpoints-GETapi-v1-tweets-auth">GET Authenticated User Tweets</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>List the tweets of the authenticated user.</p>
+
+<span id="example-requests-GETapi-v1-tweets-auth">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/v1/tweets/auth?perPage=10&amp;page=5&amp;search=officia&amp;type=active" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/v1/tweets/auth"
+);
+
+const params = {
+    "perPage": "10",
+    "page": "5",
+    "search": "officia",
+    "type": "active",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-tweets-auth">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: &quot;259ccd4e-6497-45c8-bebb-5655f7a428e8&quot;,
+            &quot;tweet_date&quot;: &quot;2020-12-27T11:43:27.000000Z&quot;,
+            &quot;tweet_id&quot;: 1343160562595803136,
+            &quot;tweet&quot;: &quot;How Python works https://t.co/ZbM14f94jm&quot;,
+            &quot;status&quot;: &quot;active&quot;,
+            &quot;user&quot;: {
+                &quot;id&quot;: &quot;fc89c340-5d75-4a8c-9fce-ea1a96bd4f6a&quot;,
+                &quot;email&quot;: &quot;john@doe.com&quot;,
+                &quot;name&quot;: &quot;John Doe&quot;
+            },
+            &quot;media&quot;: [
+                {
+                    &quot;url&quot;: &quot;http://localhost:8000/storage/1/FjCMNv6BPAV7HDpC.jpg&quot;,
+                    &quot;name&quot;: &quot;FjCMNv6BPAV7HDpC.jpg&quot;,
+                    &quot;size&quot;: 69233,
+                    &quot;type&quot;: &quot;image/jpeg&quot;
+                }
+            ]
+        },
+        {
+            &quot;id&quot;: &quot;d7c87ff6-56c3-49fe-8959-9a0fd3894d2b&quot;,
+            &quot;tweet_date&quot;: &quot;2020-11-30T20:01:20.000000Z&quot;,
+            &quot;tweet_id&quot;: 1333501386147893248,
+            &quot;tweet&quot;: &quot;@ProfDemirtas Ekonomiye olduğu kadar t&uuml;rk&ccedil;eye olan hakimiyetinizde g&ouml;z kamaştırıyor&quot;,
+            &quot;status&quot;: &quot;active&quot;,
+            &quot;user&quot;: {
+                &quot;id&quot;: &quot;fc89c340-5d75-4a8c-9fce-ea1a96bd4f6a&quot;,
+                &quot;email&quot;: &quot;john@doe.com&quot;,
+                &quot;name&quot;: &quot;John Doe&quot;
+            },
+            &quot;media&quot;: []
+        }
+    ],
+    &quot;links&quot;: {
+        &quot;first&quot;: &quot;http://localhost:8000/api/v1/tweets?page=1&quot;,
+        &quot;last&quot;: &quot;http://localhost:8000/api/v1/tweets?page=1&quot;,
+        &quot;prev&quot;: null,
+        &quot;next&quot;: null
+    },
+    &quot;meta&quot;: {
+        &quot;current_page&quot;: 1,
+        &quot;from&quot;: 1,
+        &quot;last_page&quot;: 1,
+        &quot;links&quot;: [
+            {
+                &quot;url&quot;: null,
+                &quot;label&quot;: &quot;&amp;laquo; Previous&quot;,
+                &quot;active&quot;: false
+            },
+            {
+                &quot;url&quot;: &quot;http://localhost:8000/api/v1/tweets?page=1&quot;,
+                &quot;label&quot;: &quot;1&quot;,
+                &quot;active&quot;: true
+            },
+            {
+                &quot;url&quot;: null,
+                &quot;label&quot;: &quot;Next &amp;raquo;&quot;,
+                &quot;active&quot;: false
+            }
+        ],
+        &quot;path&quot;: &quot;http://localhost:8000/api/v1/tweets&quot;,
+        &quot;per_page&quot;: 50,
+        &quot;to&quot;: 1,
+        &quot;total&quot;: 2
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-tweets-auth" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-tweets-auth"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-tweets-auth"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-tweets-auth" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-tweets-auth"></code></pre>
+</span>
+<form id="form-GETapi-v1-tweets-auth" data-method="GET"
+      data-path="api/v1/tweets/auth"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Authorization":"Bearer {YOUR_AUTH_KEY}","Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-tweets-auth', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-tweets-auth"
+                    onclick="tryItOut('GETapi-v1-tweets-auth');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-tweets-auth"
+                    onclick="cancelTryOut('GETapi-v1-tweets-auth');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-tweets-auth" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/tweets/auth</code></b>
+        </p>
+                <p>
+            <label id="auth-GETapi-v1-tweets-auth" hidden>Authorization header:
+                <b><code>Bearer </code></b><input type="text"
+                                                                name="Authorization"
+                                                                data-prefix="Bearer "
+                                                                data-endpoint="GETapi-v1-tweets-auth"
+                                                                data-component="header"></label>
+        </p>
+                    <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                    <p>
+                <b><code>perPage</code></b>&nbsp;&nbsp;<small>integer</small>     <i>optional</i> &nbsp;
+                <input type="number"
+               name="perPage"
+               data-endpoint="GETapi-v1-tweets-auth"
+               value="10"
+               data-component="query" hidden>
+    <br>
+<p>Number of items per page .</p>
+            </p>
+                    <p>
+                <b><code>page</code></b>&nbsp;&nbsp;<small>integer</small>     <i>optional</i> &nbsp;
+                <input type="number"
+               name="page"
+               data-endpoint="GETapi-v1-tweets-auth"
+               value="5"
+               data-component="query" hidden>
+    <br>
+<p>Current Page.</p>
+            </p>
+                    <p>
+                <b><code>search</code></b>&nbsp;&nbsp;<small>string</small>     <i>optional</i> &nbsp;
+                <input type="text"
+               name="search"
+               data-endpoint="GETapi-v1-tweets-auth"
+               value="officia"
+               data-component="query" hidden>
+    <br>
+<p>Search keyword.</p>
+            </p>
+                    <p>
+                <b><code>type</code></b>&nbsp;&nbsp;<small>string</small>     <i>optional</i> &nbsp;
+                <input type="text"
+               name="type"
+               data-endpoint="GETapi-v1-tweets-auth"
+               value="active"
+               data-component="query" hidden>
+    <br>
+<p>active|passive</p>
+            </p>
+                </form>
+
+            <h2 id="endpoints-POSTapi-v1-tweets-get-last-tweets">POST Get Last 20 Tweets</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Get the last 20 tweets of the user from twitter</p>
+
+<span id="example-requests-POSTapi-v1-tweets-get-last-tweets">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8000/api/v1/tweets/get-last-tweets" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/v1/tweets/get-last-tweets"
+);
+
+const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-v1-tweets-get-last-tweets">
+            <blockquote>
+            <p>Example response (204):</p>
+        </blockquote>
+                <pre>
+<code>[Empty response]</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-v1-tweets-get-last-tweets" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-v1-tweets-get-last-tweets"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-tweets-get-last-tweets"></code></pre>
+</span>
+<span id="execution-error-POSTapi-v1-tweets-get-last-tweets" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-v1-tweets-get-last-tweets"></code></pre>
+</span>
+<form id="form-POSTapi-v1-tweets-get-last-tweets" data-method="POST"
+      data-path="api/v1/tweets/get-last-tweets"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Authorization":"Bearer {YOUR_AUTH_KEY}","Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-tweets-get-last-tweets', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-v1-tweets-get-last-tweets"
+                    onclick="tryItOut('POSTapi-v1-tweets-get-last-tweets');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-v1-tweets-get-last-tweets"
+                    onclick="cancelTryOut('POSTapi-v1-tweets-get-last-tweets');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-v1-tweets-get-last-tweets" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/tweets/get-last-tweets</code></b>
+        </p>
+                <p>
+            <label id="auth-POSTapi-v1-tweets-get-last-tweets" hidden>Authorization header:
+                <b><code>Bearer </code></b><input type="text"
+                                                                name="Authorization"
+                                                                data-prefix="Bearer "
+                                                                data-endpoint="POSTapi-v1-tweets-get-last-tweets"
+                                                                data-component="header"></label>
+        </p>
+                </form>
+
+            <h2 id="endpoints-GETapi-v1-tweets">GET All Tweets</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>List the tweets of the all user.</p>
+
+<span id="example-requests-GETapi-v1-tweets">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/v1/tweets?perPage=19&amp;page=17" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/v1/tweets"
+);
+
+const params = {
+    "perPage": "19",
+    "page": "17",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-tweets">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: &quot;259ccd4e-6497-45c8-bebb-5655f7a428e8&quot;,
+            &quot;tweet_date&quot;: &quot;2020-12-27T11:43:27.000000Z&quot;,
+            &quot;tweet_id&quot;: 1343160562595803136,
+            &quot;tweet&quot;: &quot;How Python works https://t.co/ZbM14f94jm&quot;,
+            &quot;status&quot;: &quot;active&quot;,
+            &quot;user&quot;: {
+                &quot;id&quot;: &quot;fc89c340-5d75-4a8c-9fce-ea1a96bd4f6a&quot;,
+                &quot;email&quot;: &quot;john@doe.com&quot;,
+                &quot;name&quot;: &quot;John Doe&quot;
+            },
+            &quot;media&quot;: [
+                {
+                    &quot;url&quot;: &quot;http://localhost:8000/storage/1/FjCMNv6BPAV7HDpC.jpg&quot;,
+                    &quot;name&quot;: &quot;FjCMNv6BPAV7HDpC.jpg&quot;,
+                    &quot;size&quot;: 69233,
+                    &quot;type&quot;: &quot;image/jpeg&quot;
+                }
+            ]
+        },
+        {
+            &quot;id&quot;: &quot;d7c87ff6-56c3-49fe-8959-9a0fd3894d2b&quot;,
+            &quot;tweet_date&quot;: &quot;2020-11-30T20:01:20.000000Z&quot;,
+            &quot;tweet_id&quot;: 1333501386147893248,
+            &quot;tweet&quot;: &quot;@ProfDemirtas Ekonomiye olduğu kadar t&uuml;rk&ccedil;eye olan hakimiyetinizde g&ouml;z kamaştırıyor&quot;,
+            &quot;status&quot;: &quot;active&quot;,
+            &quot;user&quot;: {
+                &quot;id&quot;: &quot;fc89c340-5d75-4a8c-9fce-ea1a96bd4f6a&quot;,
+                &quot;email&quot;: &quot;john@doe.com&quot;,
+                &quot;name&quot;: &quot;John Doe&quot;
+            },
+            &quot;media&quot;: []
+        }
+    ],
+    &quot;links&quot;: {
+        &quot;first&quot;: &quot;http://localhost:8000/api/v1/tweets?page=1&quot;,
+        &quot;last&quot;: &quot;http://localhost:8000/api/v1/tweets?page=1&quot;,
+        &quot;prev&quot;: null,
+        &quot;next&quot;: null
+    },
+    &quot;meta&quot;: {
+        &quot;current_page&quot;: 1,
+        &quot;from&quot;: 1,
+        &quot;last_page&quot;: 1,
+        &quot;links&quot;: [
+            {
+                &quot;url&quot;: null,
+                &quot;label&quot;: &quot;&amp;laquo; Previous&quot;,
+                &quot;active&quot;: false
+            },
+            {
+                &quot;url&quot;: &quot;http://localhost:8000/api/v1/tweets?page=1&quot;,
+                &quot;label&quot;: &quot;1&quot;,
+                &quot;active&quot;: true
+            },
+            {
+                &quot;url&quot;: null,
+                &quot;label&quot;: &quot;Next &amp;raquo;&quot;,
+                &quot;active&quot;: false
+            }
+        ],
+        &quot;path&quot;: &quot;http://localhost:8000/api/v1/tweets&quot;,
+        &quot;per_page&quot;: 50,
+        &quot;to&quot;: 1,
+        &quot;total&quot;: 2
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-tweets" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-tweets"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-tweets"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-tweets" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-tweets"></code></pre>
+</span>
+<form id="form-GETapi-v1-tweets" data-method="GET"
+      data-path="api/v1/tweets"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Authorization":"Bearer {YOUR_AUTH_KEY}","Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-tweets', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-tweets"
+                    onclick="tryItOut('GETapi-v1-tweets');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-tweets"
+                    onclick="cancelTryOut('GETapi-v1-tweets');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-tweets" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/tweets</code></b>
+        </p>
+                <p>
+            <label id="auth-GETapi-v1-tweets" hidden>Authorization header:
+                <b><code>Bearer </code></b><input type="text"
+                                                                name="Authorization"
+                                                                data-prefix="Bearer "
+                                                                data-endpoint="GETapi-v1-tweets"
+                                                                data-component="header"></label>
+        </p>
+                    <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                    <p>
+                <b><code>perPage</code></b>&nbsp;&nbsp;<small>integer</small>     <i>optional</i> &nbsp;
+                <input type="number"
+               name="perPage"
+               data-endpoint="GETapi-v1-tweets"
+               value="19"
+               data-component="query" hidden>
+    <br>
+<p>Number of items per page .</p>
+            </p>
+                    <p>
+                <b><code>page</code></b>&nbsp;&nbsp;<small>integer</small>     <i>optional</i> &nbsp;
+                <input type="number"
+               name="page"
+               data-endpoint="GETapi-v1-tweets"
+               value="17"
+               data-component="query" hidden>
+    <br>
+<p>Current Page.</p>
+            </p>
+                </form>
+
+            <h2 id="endpoints-GETapi-v1-verification-codes">GET Verification Codes</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>For testing purposes only. Returns valid verification codes for the user's mail or phone numbers.</p>
+
+<span id="example-requests-GETapi-v1-verification-codes">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/v1/verification-codes" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/v1/verification-codes"
+);
+
+const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-verification-codes">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">[
+    {
+        &quot;id&quot;: 1,
+        &quot;type&quot;: &quot;sms&quot;,
+        &quot;valid&quot;: true,
+        &quot;validity&quot;: &quot;5&quot;,
+        &quot;token&quot;: &quot;X5ilQT&quot;,
+        &quot;user_id&quot;: 1,
+        &quot;created_at&quot;: &quot;2021-12-24T02:41:05.000000Z&quot;,
+        &quot;updated_at&quot;: &quot;2021-12-24T02:41:05.000000Z&quot;
+    },
+    {
+        &quot;id&quot;: 2,
+        &quot;type&quot;: &quot;email&quot;,
+        &quot;valid&quot;: true,
+        &quot;validity&quot;: &quot;5&quot;,
+        &quot;token&quot;: &quot;V7Yb4g&quot;,
+        &quot;user_id&quot;: 1,
+        &quot;created_at&quot;: &quot;2021-12-24T02:41:05.000000Z&quot;,
+        &quot;updated_at&quot;: &quot;2021-12-24T02:41:05.000000Z&quot;
+    }
+]</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-verification-codes" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-verification-codes"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-verification-codes"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-verification-codes" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-verification-codes"></code></pre>
+</span>
+<form id="form-GETapi-v1-verification-codes" data-method="GET"
+      data-path="api/v1/verification-codes"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Authorization":"Bearer {YOUR_AUTH_KEY}","Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-verification-codes', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-verification-codes"
+                    onclick="tryItOut('GETapi-v1-verification-codes');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-verification-codes"
+                    onclick="cancelTryOut('GETapi-v1-verification-codes');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-verification-codes" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/verification-codes</code></b>
+        </p>
+                <p>
+            <label id="auth-GETapi-v1-verification-codes" hidden>Authorization header:
+                <b><code>Bearer </code></b><input type="text"
+                                                                name="Authorization"
+                                                                data-prefix="Bearer "
+                                                                data-endpoint="GETapi-v1-verification-codes"
+                                                                data-component="header"></label>
+        </p>
+                </form>
+
+            <h2 id="endpoints-POSTapi-v1-verification-generate">POST Regenerate Verification Token</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>This endpoint provides the user regenerates validation codes of the specified type</p>
+
+<span id="example-requests-POSTapi-v1-verification-generate">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8000/api/v1/verification-generate" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"type\": \"ut\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/v1/verification-generate"
+);
+
+const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "type": "ut"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-v1-verification-generate">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;token&quot;: &quot;i2XlF3&quot;,
+    &quot;type&quot;: &quot;sms&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (422):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;message&quot;: &quot;The given data was invalid.&quot;,
+    &quot;errors&quot;: {
+        &quot;type&quot;: [
+            &quot;The type field is required.&quot;
+        ]
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-v1-verification-generate" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-v1-verification-generate"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-verification-generate"></code></pre>
+</span>
+<span id="execution-error-POSTapi-v1-verification-generate" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-v1-verification-generate"></code></pre>
+</span>
+<form id="form-POSTapi-v1-verification-generate" data-method="POST"
+      data-path="api/v1/verification-generate"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Authorization":"Bearer {YOUR_AUTH_KEY}","Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-verification-generate', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-v1-verification-generate"
+                    onclick="tryItOut('POSTapi-v1-verification-generate');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-v1-verification-generate"
+                    onclick="cancelTryOut('POSTapi-v1-verification-generate');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-v1-verification-generate" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/verification-generate</code></b>
+        </p>
+                <p>
+            <label id="auth-POSTapi-v1-verification-generate" hidden>Authorization header:
+                <b><code>Bearer </code></b><input type="text"
+                                                                name="Authorization"
+                                                                data-prefix="Bearer "
+                                                                data-endpoint="POSTapi-v1-verification-generate"
+                                                                data-component="header"></label>
+        </p>
+                        <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <p>
+            <b><code>type</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+                <input type="text"
+               name="type"
+               data-endpoint="POSTapi-v1-verification-generate"
+               value="ut"
+               data-component="body" hidden>
+    <br>
+<p>email|sms</p>
+        </p>
+        </form>
+
+            <h2 id="endpoints-POSTapi-v1-logout">POST Logout</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>This endpoint allows the authenticated user to log out.</p>
+
+<span id="example-requests-POSTapi-v1-logout">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8000/api/v1/logout" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/v1/logout"
+);
+
+const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-v1-logout">
+            <blockquote>
+            <p>Example response (204):</p>
+        </blockquote>
+                <pre>
+<code>[Empty response]</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-v1-logout" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-v1-logout"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-logout"></code></pre>
+</span>
+<span id="execution-error-POSTapi-v1-logout" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-v1-logout"></code></pre>
+</span>
+<form id="form-POSTapi-v1-logout" data-method="POST"
+      data-path="api/v1/logout"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Authorization":"Bearer {YOUR_AUTH_KEY}","Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-logout', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-v1-logout"
+                    onclick="tryItOut('POSTapi-v1-logout');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-v1-logout"
+                    onclick="cancelTryOut('POSTapi-v1-logout');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-v1-logout" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/logout</code></b>
+        </p>
+                <p>
+            <label id="auth-POSTapi-v1-logout" hidden>Authorization header:
+                <b><code>Bearer </code></b><input type="text"
+                                                                name="Authorization"
+                                                                data-prefix="Bearer "
+                                                                data-endpoint="POSTapi-v1-logout"
+                                                                data-component="header"></label>
+        </p>
+                </form>
+
+            <h2 id="endpoints-POSTapi-v1-refresh">POST Refresh Token</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Renews the token before the ttl expires</p>
+
+<span id="example-requests-POSTapi-v1-refresh">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8000/api/v1/refresh" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/v1/refresh"
+);
+
+const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-v1-refresh">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;access_token&quot;: &quot;{YOUR_TOKEN}&quot;,
+    &quot;token_type&quot;: &quot;bearer&quot;,
+    &quot;expires_in&quot;: 3600
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-v1-refresh" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-v1-refresh"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-refresh"></code></pre>
+</span>
+<span id="execution-error-POSTapi-v1-refresh" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-v1-refresh"></code></pre>
+</span>
+<form id="form-POSTapi-v1-refresh" data-method="POST"
+      data-path="api/v1/refresh"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Authorization":"Bearer {YOUR_AUTH_KEY}","Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-refresh', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-v1-refresh"
+                    onclick="tryItOut('POSTapi-v1-refresh');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-v1-refresh"
+                    onclick="cancelTryOut('POSTapi-v1-refresh');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-v1-refresh" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/refresh</code></b>
+        </p>
+                <p>
+            <label id="auth-POSTapi-v1-refresh" hidden>Authorization header:
+                <b><code>Bearer </code></b><input type="text"
+                                                                name="Authorization"
+                                                                data-prefix="Bearer "
+                                                                data-endpoint="POSTapi-v1-refresh"
+                                                                data-component="header"></label>
+        </p>
+                </form>
+
+            <h2 id="endpoints-POSTapi-v1-verification">POST Verify User</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>This endpoint provides the users to verify their email or phone number</p>
+
+<span id="example-requests-POSTapi-v1-verification">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8000/api/v1/verification" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"token\": \"a\",
+    \"type\": \"nobis\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/v1/verification"
+);
+
+const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "token": "a",
+    "type": "nobis"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-v1-verification">
+            <blockquote>
+            <p>Example response (204):</p>
+        </blockquote>
+                <pre>
+<code>[Empty response]</code>
+ </pre>
+            <blockquote>
+            <p>Example response (403):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;status&quot;: &quot;error&quot;,
+    &quot;code&quot;: 403,
+    &quot;message&quot;: &quot;VerificationCodeWrong&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-v1-verification" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-v1-verification"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-verification"></code></pre>
+</span>
+<span id="execution-error-POSTapi-v1-verification" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-v1-verification"></code></pre>
+</span>
+<form id="form-POSTapi-v1-verification" data-method="POST"
+      data-path="api/v1/verification"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Authorization":"Bearer {YOUR_AUTH_KEY}","Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-verification', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-v1-verification"
+                    onclick="tryItOut('POSTapi-v1-verification');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-v1-verification"
+                    onclick="cancelTryOut('POSTapi-v1-verification');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-v1-verification" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/verification</code></b>
+        </p>
+                <p>
+            <label id="auth-POSTapi-v1-verification" hidden>Authorization header:
+                <b><code>Bearer </code></b><input type="text"
+                                                                name="Authorization"
+                                                                data-prefix="Bearer "
+                                                                data-endpoint="POSTapi-v1-verification"
+                                                                data-component="header"></label>
+        </p>
+                        <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <p>
+            <b><code>token</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+                <input type="text"
+               name="token"
+               data-endpoint="POSTapi-v1-verification"
+               value="a"
+               data-component="body" hidden>
+    <br>
+
+        </p>
+                <p>
+            <b><code>type</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+                <input type="text"
+               name="type"
+               data-endpoint="POSTapi-v1-verification"
+               value="nobis"
+               data-component="body" hidden>
+    <br>
+<p>email|sms</p>
+        </p>
+        </form>
+
+            <h2 id="endpoints-PUTapi-v1-tweets">PUT Update And Publish Tweet</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>The tweet is updated and published.</p>
+
+<span id="example-requests-PUTapi-v1-tweets">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request PUT \
+    "http://localhost:8000/api/v1/tweets" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"tweet\": \"architecto\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/v1/tweets"
+);
+
+const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "tweet": "architecto"
+};
+
+fetch(url, {
+    method: "PUT",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-PUTapi-v1-tweets">
+            <blockquote>
+            <p>Example response (204):</p>
+        </blockquote>
+                <pre>
+<code>[Empty response]</code>
+ </pre>
+    </span>
+<span id="execution-results-PUTapi-v1-tweets" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-PUTapi-v1-tweets"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-PUTapi-v1-tweets"></code></pre>
+</span>
+<span id="execution-error-PUTapi-v1-tweets" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-PUTapi-v1-tweets"></code></pre>
+</span>
+<form id="form-PUTapi-v1-tweets" data-method="PUT"
+      data-path="api/v1/tweets"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Authorization":"Bearer {YOUR_AUTH_KEY}","Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('PUTapi-v1-tweets', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-PUTapi-v1-tweets"
+                    onclick="tryItOut('PUTapi-v1-tweets');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-PUTapi-v1-tweets"
+                    onclick="cancelTryOut('PUTapi-v1-tweets');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-PUTapi-v1-tweets" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-darkblue">PUT</small>
+            <b><code>api/v1/tweets</code></b>
+        </p>
+                <p>
+            <label id="auth-PUTapi-v1-tweets" hidden>Authorization header:
+                <b><code>Bearer </code></b><input type="text"
+                                                                name="Authorization"
+                                                                data-prefix="Bearer "
+                                                                data-endpoint="PUTapi-v1-tweets"
+                                                                data-component="header"></label>
+        </p>
+                <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <p>
+                <b><code>tweetId</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+                <input type="text"
+               name="tweetId"
+               data-endpoint="PUTapi-v1-tweets"
+               value="iure"
+               data-component="url" hidden>
+    <br>
+<p>The ID of the tweet.</p>
+            </p>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <p>
+            <b><code>tweet</code></b>&nbsp;&nbsp;<small>string</small>     <i>optional</i> &nbsp;
+                <input type="text"
+               name="tweet"
+               data-endpoint="PUTapi-v1-tweets"
+               value="architecto"
+               data-component="body" hidden>
+    <br>
+<p>max:280</p>
+        </p>
+        </form>
+
+    
+
+        
+    </div>
+    <div class="dark-box">
+                    <div class="lang-selector">
+                                                        <button type="button" class="lang-button" data-language-name="bash">bash</button>
+                                                        <button type="button" class="lang-button" data-language-name="javascript">javascript</button>
+                            </div>
+            </div>
+</div>
+</body>
+</html>
